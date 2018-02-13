@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <display-name/>
+    <!--<servlet>-->
+        <!--<servlet-name>LoginServlet</servlet-name>-->
+        <!--<servlet-class>com.servlet.LoginServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet>-->
+        <!--<servlet-name>RegistServlet</servlet-name>-->
+        <!--<servlet-class>com.servlet.RegistServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>LoginServlet</servlet-name>-->
+        <!--<url-pattern>/LoginServlet</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>RegistServlet</servlet-name>-->
+        <!--<url-pattern>/RegistServlet</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet>-->
+        <!--<servlet-name>TieZiServlet</servlet-name>-->
+        <!--<servlet-class>com.servlet.TieZiServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>TieZiServlet</servlet-name>-->
+        <!--<url-pattern>/TieZiServlet</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet>-->
+        <!--<servlet-name>HuiFuServlet</servlet-name>-->
+        <!--<servlet-class>com.servlet.HuiFuServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>HuiFuServlet</servlet-name>-->
+        <!--<url-pattern>/HuiFuServlet</url-pattern>-->
+    <!--</servlet-mapping>-->
+    
+    <welcome-file-list>
+        <welcome-file>login.jsp</welcome-file>
+    </welcome-file-list>
+
+    <filter>
+        <filter-name>SessionFilter</filter-name>
+        <filter-class>com.filter.LoginFilter</filter-class>
+        <init-param>
+            <param-name>passUrl</param-name>
+            <param-value>regist;login</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>SessionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <context-param>
+        <description>配置Spring配置文件路径</description>
+        <param-name>contextConfigLocation</param-name>
+        <!-- 如果是监听多个文件，可用‘，’隔开 -->
+        <param-value>classpath:spring-*.xml</param-value>
+    </context-param>
+
+    <listener>
+        <description>配置Spring上下文监听器</description>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- Spring MVC 核心控制器 DispatcherServlet 配置开始 -->
+    <servlet>
+        <servlet-name>SpringMVC</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!-- 可以通过contextConfigLocation来自定义SpringMVC配置文件的位置，如不指定，则默认在WEB-INF目录下，名称为[<servlet-name>]-servlet.xml，
+             此时文件名必须为[<servlet-name>]-servlet.xml，否则会出错-->
+        <!--以下init-param是自定义SpringMVC的配置文件的位置 -->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- 拦截设置 -->
+    <servlet-mapping>
+        <servlet-name>SpringMVC</servlet-name>
+        <!-- 此处可以可以配置成*.do，对应struts的后缀习惯 -->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <!-- Spring MVC 核心配置结束 -->
+
+</web-app>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="Setting">
+    <select id="getSetting" parameterType="java.lang.String" resultType="com.model.Setting" useCache="true">
+        SELECT * FROM settings WHERE settingName = #{settingName}
+    </select>
+    <update id="changeSetting" parameterType="map" flushCache="true">
+        UPDATE settings SET (settingValue)=#{settingValue} WHERE settingName=#{settingName}
+    </update>
+    <delete id="deleteSetting" parameterType="java.lang.String" flushCache="true">
+        DELETE FROM setting WHERE settingName=#{settingName}
+    </delete>
+
+    <!-- Cache 配置 -->
+    <cache
+            eviction="FIFO"
+            flushInterval="60000"
+            size="512"
+            readOnly="true" />
+</mapper>

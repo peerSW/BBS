@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="user">
+    <select id="findByUsername" resultType="com.model.User" parameterType="java.lang.String">
+        SELECT * From user WHERE username = #{username}
+    </select>
+
+    <insert id="addUser" parameterType="com.model.User">
+        INSERT INTO user (userID,username,password) VALUES (#{userID},#{username},#{password})
+    </insert>
+</mapper>

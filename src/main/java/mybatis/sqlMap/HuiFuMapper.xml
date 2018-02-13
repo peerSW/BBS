@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="HuiFu">
+    <select id="getHuiFus" resultType="com.model.HuiFu" parameterType="map">
+        select * from HuiFu#{table} where TieZiID = #{TieZiID} ORDER BY createTime ASC limit #{start},#{limit}
+    </select>
+
+    <select id="allHuiFus" resultType="com.model.HuiFu" parameterType="int">
+        select * from HuiFu#{table}
+    </select>
+
+    <insert id="postHuiFu" parameterType="map" flushCache="true">
+        INSERT INTO HuiFu#{table} (HuiFuID,userID,username,TieZiID,createTime,content)
+        VALUES (#{huifu.HuiFuID},#{huifu.userID},#{huifu.username},#{huifu.TieZiID},#{huifu.createTime},#{huifu.content})
+    </insert>
+
+    <delete id="deleteHuiFu" parameterType="map" flushCache="true">
+        DELETE FROM HuiFu#{table} WHERE HuiFuID=#{HuiFuID}
+    </delete>
+
+    <update id="createTable" parameterType="int">
+        CREATE TABLE HuiFu#{table} (
+	HuiFuID CHAR(36) NOT NULL,
+	TieZiID CHAR(36) NOT NULL,
+	userID CHAR(36) NOT NULL,
+	username CHAR(24) NOT NULL,
+	createTime TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+	content TEXT NOT NULL,
+	PRIMARY KEY (HuiFuID),
+	INDEX TieZiID (TieZiID) USING HASH
+)
+COLLATE=utf8_general_ci
+ENGINE=InnoDB
+    </update>
+
+
+    <!-- Cache 配置 -->
+    <cache
+            eviction="FIFO"
+            flushInterval="60000"
+            size="512"
+            readOnly="true" />
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="TieZi">
+    <!--查询当前板块指定页码的帖子-->
+    <select id="getTieZis" resultType="com.model.TieZi" parameterType="map">
+        SELECT * from TieZi#{BanKuaiID} ORDER BY updateTime DESC limit #{start},#{limit}
+    </select>
+
+    <!--根据帖子ID查询帖子-->
+    <select id="getTieZi" resultType="com.model.TieZi" parameterType="map">
+        SELECT * from TieZi#{BanKuaiID} where TieZiID = #{TieZiID}
+    </select>
+
+    <!--指定板块插入新帖子-->
+    <insert id="insert" parameterType="com.model.TieZi" flushCache="true">
+        Insert INTO TieZi#{BanKuaiID} (TieZiID,title,userID,username,createTime,updateTime,count,BanKuaiID)
+        VALUES(#{TieZiID},#{title},#{userID},#{username},
+        #{createTime},#{updateTime},#{count},#{BanKuaiID})
+    </insert>
+
+    <!--回帖时更新帖子回复数记录-->
+    <update id="addRecord" parameterType="map" flushCache="true">
+        Update TieZi#{BanKuaiID} SET updateTime = #{updateTime} , count = count +1 WHERE TieZiID = #{TieZiID}
+    </update>
+
+    <!--给新板块创建用于储存帖子的表-->
+    <update id="createTable" parameterType="int" >
+        CREATE TABLE TieZi#{BanKuaiID} (
+	TieZiID CHAR(36) NOT NULL,
+	userID CHAR(36) NOT NULL,
+	username CHAR(24) NOT NULL,
+	createTime TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+	count SMALLINT(5) NOT NULL,
+	updateTime TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+	title TINYTEXT NOT NULL,
+	BanKuaiID INT(11) NOT NULL,
+	PRIMARY KEY (TieZiID)
+)
+COLLATE=utf8_general_ci
+ENGINE=InnoDB
+    </update>
+    <!-- Cache 配置 -->
+    <cache
+            eviction="FIFO"
+            flushInterval="60000"
+            size="512"
+            readOnly="true" />
+</mapper>

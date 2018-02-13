@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<settings>
+  <!--settings of the Website-->
+  <TieZi>
+    <count>30</count>
+  </TieZi>
+  <HuiFu>
+    <hash>1</hash>
+    <count>30</count>
+  </HuiFu>
+  <cookies>
+      <autoLogin>autoLogin</autoLogin>
+      <separator>。</separator>
+  </cookies>
+  <Jedis>
+    <host>localhost</host>
+    <port>6379</port>
+  </Jedis>
+  <Database>
+    <IPAdress>192.168.56.1</IPAdress>
+    <port>3307</port>
+    <DbName>test_m</DbName>
+    <user>root</user>
+    <password>000000</password>
+  </Database>
+</settings>
