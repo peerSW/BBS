@@ -6,7 +6,7 @@
         SELECT * FROM settings WHERE settingName = #{settingName}
     </select>
     <update id="changeSetting" parameterType="map" flushCache="true">
-        UPDATE settings SET (settingValue)=#{settingValue} WHERE settingName=#{settingName}
+        UPDATE settings SET settingValue=#{settingValue} WHERE settingName=#{settingName}
     </update>
     <delete id="deleteSetting" parameterType="java.lang.String" flushCache="true">
         DELETE FROM setting WHERE settingName=#{settingName}
