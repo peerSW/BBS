@@ -3,12 +3,12 @@
 
 <mapper namespace="TieZi">
     <!--查询当前板块指定页码的帖子-->
-    <select id="getTieZis" resultType="com.model.TieZi" parameterType="map">
+    <select id="getTieZis" resultType="com.model.TieZi" parameterType="map" useCache="true">
         SELECT * from TieZi#{BanKuaiID} ORDER BY updateTime DESC limit #{start},#{limit}
     </select>
 
     <!--根据帖子ID查询帖子-->
-    <select id="getTieZi" resultType="com.model.TieZi" parameterType="map">
+    <select id="getTieZi" resultType="com.model.TieZi" parameterType="map" useCache="true">
         SELECT * from TieZi#{BanKuaiID} where TieZiID = #{TieZiID}
     </select>
 
